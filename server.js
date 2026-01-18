@@ -37,7 +37,7 @@ App.use(
 	}),
 );
 
-App.options("*", cors());
+App.options("(.*)", cors());
 
 App.use(express.json());
 app.use(express.urlencoded({ extended: true }));
