@@ -19,7 +19,7 @@ const allowedOrigins = [
 	"https://liftverse-frontend.vercel.app",
 ];
 
-app.use(
+App.use(
 	cors({
 		origin: function (origin, callback) {
 		
@@ -37,7 +37,7 @@ app.use(
 	}),
 );
 
-app.options("*", cors());
+App.options("*", cors());
 
 App.use(express.json());
 app.use(express.urlencoded({ extended: true }));
