@@ -16,13 +16,12 @@ import cors from "cors";
 const allowedOrigins = [
 	"http://localhost:3000",
 	"http://localhost:5173",
-	"https://liftverse-frontend.vercel.app",
+	"https://liftverse.vercel.app",
 ];
 
 App.use(
 	cors({
 		origin: function (origin, callback) {
-		
 			if (!origin) return callback(null, true);
 
 			if (allowedOrigins.includes(origin)) {
@@ -36,7 +35,6 @@ App.use(
 		allowedHeaders: ["Content-Type", "Authorization"],
 	}),
 );
-
 
 App.use(express.json());
 App.use("/api/auth", authRouter);
