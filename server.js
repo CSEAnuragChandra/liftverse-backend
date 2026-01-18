@@ -39,7 +39,6 @@ App.use(
 
 
 App.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 App.use("/api/auth", authRouter);
 App.use("/api/user", userRouter);
 App.use("/api/gym", gymRouter);
