@@ -7,20 +7,45 @@ import userRouter from "./routes/userRoutes.js";
 import gymRouter from "./routes/gymRoutes.js";
 import couponRouter from "./routes/couponRoutes.js";
 import redemptionRouter from "./routes/redemptionRoutes.js";
-import cors from "cors";
+App.disable("etag");
 dotenv.config();
 const PORT = process.env.Port || 7000;
-const App = express();
-App.disable("etag");
-App.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend.vercel.app"
-  ],
-  credentials: true
-}));
+
+import cors from "cors";
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://liftverse.vercel.app"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (Postman, mobile apps)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ]
+  })
+);
+
+// VERY IMPORTANT
+app.options("*", cors());
+
 
 App.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 App.use("/api/auth", authRouter);
 App.use("/api/user", userRouter);
 App.use("/api/gym", gymRouter);
